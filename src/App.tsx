@@ -1,12 +1,10 @@
-import React from 'react';
-import './App.css';
+import React, { FC } from 'react';
+import MainPageContainer from './components/MainPage/MainPageContainer';
 
-function App() {
-  return (
-    <div className="App">
-
-    </div>
-  );
-}
+const App: FC = () => (
+	<div>
+		<MainPageContainer />
+	</div>
+);
 
 export default App;
