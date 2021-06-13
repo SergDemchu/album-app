@@ -8,6 +8,6 @@ export const instance = axios.create({
 export const photoAPI = {
     getPhoto() {
         return instance.get(`photos`)
-            .then(response => console.log(response.data));
+            .then(response => response.data);
     }
 };
