@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import { photoAPI } from '../../api/api';
-import { Photos, UserAction } from '../../types/photos';
+import { UserAction } from '../../types/photos';
 import { getPhotosAction } from './photosReducer';
 
 export const getPhotos = () => async (dispatch: Dispatch<UserAction>) => {

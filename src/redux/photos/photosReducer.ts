@@ -1,4 +1,4 @@
-import { ActionTypes, Photos, PhotosType, UserAction } from '../../types/photos';
+import { ActionTypes, FetchPhotosSuccess, Photos, PhotosType, UserAction } from '../../types/photos';
 
 const initialState: PhotosType = {
 	photos: [],
@@ -16,6 +16,6 @@ const photosReducer = (state = initialState, action: UserAction): PhotosType => 
 	}
 };
 
-export const getPhotosAction = (photos: Array<Photos>) => ({ type: ActionTypes.FETCH_PHOTOS_SUCCESS, photos });
+export const getPhotosAction = (photos: Array<Photos>): FetchPhotosSuccess => ({ type: ActionTypes.FETCH_PHOTOS_SUCCESS, photos });
 
 export default photosReducer;
