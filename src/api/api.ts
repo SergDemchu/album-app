@@ -6,8 +6,12 @@ export const instance = axios.create({
 });
 
 export const photoAPI = {
-	getPhoto() {
+	getPhotos() {
 		return instance.get('photos')
+			.then(response => response.data);
+	},
+	getAlbums() {
+		return instance.get('albums')
 			.then(response => response.data);
 	}
 };

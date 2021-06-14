@@ -1,62 +1,63 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, ChangeEvent } from 'react';
 
 import CardContainer from '../Card/CardContainer';
+import HeaderContainer from '../Header/HeaderContainer';
 import NavbarContainer from '../Navbar/NavbarContainer';
 import Pagination from '../Common/Pagination/Pagination';
 
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { log } from 'console';
 
 const MainPageContainer: FC = () => {
-	const { photos } = useTypedSelector(state => state.photos);
+	const { photos, albums } = useTypedSelector(state => state.photos);
 	const { getPhotos } = useActions();
-
-	const [currentPage, setCurrentPage] = useState(1);
-	const [photosPerPage, setPostsPerPage] = useState(5);
-	const [totalPhotos, setTotalPosts] = useState(100);
-
-	const lastPhotoIndex = currentPage * photosPerPage;
-	const firstPhotoIndex = lastPhotoIndex - photosPerPage;
-	const currentPhotos = photos.slice(firstPhotoIndex, lastPhotoIndex);
 
 	const [searchValue, setSearchValue] = useState('');
 
-	const paginate = (pageNum: number) => {
-		setCurrentPage(pageNum);
-	};
-
-	const nextPage = (e: any) => {
+	const slicedAlbums = albums.slice(0, 3);
+	
+	const onSetSearchValue = (e: any, input: string) => {
 		e.preventDefault();
-		setCurrentPage(currentPage + 1);
+		setSearchValue(input);
 	};
-
-	const previousPage = (e: any) => {
-		e.preventDefault();
-		setCurrentPage(currentPage - 1);
+	
+	const [clickedAlbumId, setClickedAlbumId] = useState(1);
+	
+	const onSetAlbumId = (id: number) => {
+		setClickedAlbumId(id);
 	};
-
+	
 	useEffect(() => {
 		getPhotos();
-	}, [currentPage]);
-
+	}, [clickedAlbumId]);
+	
 	return (
-		<>
-			<NavbarContainer
-				searchValue={searchValue}
-				setSearchValue={setSearchValue}
-			/>
-			<CardContainer
-				photos={currentPhotos}
-				searchValue={searchValue}
-			/>
-			<Pagination
-				nextPage={nextPage}
-				paginate={paginate}
-				totalPosts={totalPhotos}
-				previousPage={previousPage}
-				postsPerPage={photosPerPage}
-			/>
-		</>
+		<div className="container">
+			<div className="row">
+				<div className="col">
+					<HeaderContainer
+						searchValue={searchValue}
+						onSetSearchValue={onSetSearchValue}
+					/>
+				</div>
+			</div>
+			<div className="row">
+				<div className="col col-lg-3">
+					<NavbarContainer
+						albums={slicedAlbums}
+						onSetAlbumId={onSetAlbumId}
+					/>
+				</div>
+				<div className="col">
+					<CardContainer
+						photos={photos.filter((photo) => photo.albumId === clickedAlbumId)}
+						searchValue={searchValue}
+						clickedAlbumId={clickedAlbumId}
+					/>
+				</div>
+			</div>
+		</div>
 	);
 };
 

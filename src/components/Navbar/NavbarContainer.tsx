@@ -1,29 +1,29 @@
-import React, { FC, useState } from 'react';
-
+import React, { FC } from 'react';
+import { Albums } from '../../types/photos';
 import Navbar from './Navbar';
 
 type PropsType = {
-	searchValue: string;
-	setSearchValue: (value: string) => void;
+	albums: Array<Albums>;
+	onSetAlbumId: (id: number) => void;
 }
 
-const NavbarContainer: FC<PropsType> = ({ searchValue, setSearchValue }: PropsType) => {
-
-	const [inputValue, setInputValue] = useState('');
-
-	const handleSearch = (e: any) => {
-		setInputValue(e.target.value);
-	};
+const NavbarContainer: FC<PropsType> = ({ albums, onSetAlbumId }: PropsType) => {
 
 	return (
-		<>
-			<Navbar
-				inputValue={inputValue}
-				searchValue={searchValue}
-				handleSearch={handleSearch}
-				setSearchValue={setSearchValue}
-			/>
-		</>
+		<div>
+			<ul className="nav flex-column">
+				{
+					albums.map((item, id) => (
+						<Navbar
+							onSetAlbumId={onSetAlbumId}
+							key={id}
+							title={item.title}
+							albumId={item.id}
+						/>
+					))
+				}
+			</ul>
+		</div >
 	);
 };
 

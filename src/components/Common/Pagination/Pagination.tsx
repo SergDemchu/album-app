@@ -1,37 +1,50 @@
 import React, { FC } from 'react';
 
 type PropsType = {
-	postsPerPage: number;
-	totalPosts: number;
-	paginate: (pageNum: number) => void;
-	nextPage: (e: any) => void;
-	previousPage: (e: any) => void;
-};
+	setCurrentPage: (num: number) => void;
+	currentPage: number;
+	pageNumbers: Array<number>;
+}
 
-const Pagination: FC<PropsType> = ({ postsPerPage, totalPosts, paginate, nextPage, previousPage }: PropsType) => {
+const Pagination: FC<PropsType> = ({ setCurrentPage, currentPage, pageNumbers }: PropsType) => {
 
-	const pageNumbers = [];
+	const previousPage = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+		e.preventDefault();
+		if (currentPage -1 === 0) {
+			return;
+		}
+		setCurrentPage(currentPage - 1);
+	};
 
-	for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-		pageNumbers.push(i);
-	}
+	const nextPage = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+		e.preventDefault();
+		if (currentPage +1 > pageNumbers.length) {
+			return;
+		}
+		setCurrentPage(currentPage + 1);
+	};
+
+	const paginate = (pageNum: number) => {
+		setCurrentPage(pageNum);
+	};
 
 	return (
-		<>
-			<nav>
-				<ul className="pagination justify-content-center">
-					<li onClick={previousPage} className="page-item"><a className="page-link" href="">Previous</a></li>
-					{
-						pageNumbers.map((item, id) => (
-							<li key={id} className="page-item">
+		<nav>
+			<ul className="pagination justify-content-center">
+				<li onClick={(e) => previousPage(e)} className="page-item"><a className="page-link" href="">Previous</a></li>
+				{
+					pageNumbers.map((item, id) => {
+						const activeLi = currentPage === id + 1 ? 'active' : '';
+						return (
+							<li key={id} className={`page-item ${activeLi}`}>
 								<a onClick={() => paginate(item)} className="page-link" href="#">{item}</a>
 							</li>
-						))
-					}
-					<li onClick={nextPage} className="page-item"><a className="page-link" href="">Next</a></li>
-				</ul>
-			</nav>
-		</>
+						);
+					})
+				}
+				<li onClick={(e) => nextPage(e)} className="page-item"><a className="page-link" href="">Next</a></li>
+			</ul>
+		</nav>
 	);
 };
 
