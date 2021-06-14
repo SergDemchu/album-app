@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Photos } from '../../types/photos';
 import Card from './Card';
+import { Photos } from '../../types/photos';
 import Pagination from '../Common/Pagination/Pagination';
 
 type PropsType = {
@@ -21,9 +21,9 @@ const CardContainer: FC<PropsType> = ({ photos, searchValue, clickedAlbumId }: P
 		const firstPhotoIndex = lastPhotoIndex - photosPerPage;
 		const photosSliced = photos.slice(firstPhotoIndex, lastPhotoIndex);
 		setCurrentPhotos(photosSliced);
-	
+
 		const pageNums = [];
-	
+
 		for (let i = 1; i <= Math.ceil(photos.length / photosPerPage); i++) {
 			pageNums.push(i);
 		}
@@ -35,8 +35,8 @@ const CardContainer: FC<PropsType> = ({ photos, searchValue, clickedAlbumId }: P
 			{
 				currentPhotos.map((item, id) => {
 					return (
-						item.title.toLowerCase().includes(searchValue.toLowerCase()) 
-						&& clickedAlbumId === item.albumId
+						item.title.toLowerCase().includes(searchValue.toLowerCase())
+							&& clickedAlbumId === item.albumId
 							? <Card
 								key={id}
 								image={item.thumbnailUrl}
