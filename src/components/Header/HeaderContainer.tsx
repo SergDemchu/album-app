@@ -1,10 +1,10 @@
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, MouseEvent, useState } from 'react';
 
 import Header from './Header';
 
 type PropsType = {
 	searchValue: string;
-	onSetSearchValue: (e: any, value: string) => void;
+	onSetSearchValue: (e: MouseEvent, value: string) => void;
 }
 
 const HeaderContainer: FC<PropsType> = ({ searchValue, onSetSearchValue }: PropsType) => {

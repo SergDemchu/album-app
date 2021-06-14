@@ -1,13 +1,11 @@
-import React, { FC, useState, useEffect, ChangeEvent } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 
 import CardContainer from '../Card/CardContainer';
 import HeaderContainer from '../Header/HeaderContainer';
 import NavbarContainer from '../Navbar/NavbarContainer';
-import Pagination from '../Common/Pagination/Pagination';
 
 import { useActions } from '../../hooks/useActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { log } from 'console';
 
 const MainPageContainer: FC = () => {
 	const { photos, albums } = useTypedSelector(state => state.photos);
@@ -16,22 +14,22 @@ const MainPageContainer: FC = () => {
 	const [searchValue, setSearchValue] = useState('');
 
 	const slicedAlbums = albums.slice(0, 3);
-	
+
 	const onSetSearchValue = (e: any, input: string) => {
 		e.preventDefault();
 		setSearchValue(input);
 	};
-	
+
 	const [clickedAlbumId, setClickedAlbumId] = useState(1);
-	
+
 	const onSetAlbumId = (id: number) => {
 		setClickedAlbumId(id);
 	};
-	
+
 	useEffect(() => {
 		getPhotos();
 	}, [clickedAlbumId]);
-	
+
 	return (
 		<div className="container">
 			<div className="row">
