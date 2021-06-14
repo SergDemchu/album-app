@@ -1,21 +1,22 @@
-import { ActionTypes, Photos, PhotosType, UserAction } from '../../types/photos';
+import { ActionTypes, Albums, FetchPhotosSuccess, Photos, PhotosAndAlbumsType, UserAction } from '../../types/photos';
 
-const initialState: PhotosType = {
+const initialState: PhotosAndAlbumsType = {
 	photos: [],
-	a: false
+	albums: [],
+	isLoaded: false
 };
 
-const photosReducer = (state = initialState, action: UserAction): PhotosType => {
+const photosReducer = (state = initialState, action: UserAction): PhotosAndAlbumsType => {
 	switch (action.type) {
 	case ActionTypes.FETCH_PHOTOS_SUCCESS:
 		return {
-			...state, photos: action.photos
+			...state, photos: action.photos, albums: action.albums
 		};
 	default:
 		return state;
 	}
 };
 
-export const getPhotosAction = (photos: Array<Photos>) => ({ type: ActionTypes.FETCH_PHOTOS_SUCCESS, photos });
+export const getPhotosAction = (photos: Array<Photos>, albums: Array<Albums>): FetchPhotosSuccess => ({ type: ActionTypes.FETCH_PHOTOS_SUCCESS, photos, albums });
 
 export default photosReducer;

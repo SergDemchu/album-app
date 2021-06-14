@@ -6,6 +6,12 @@ export interface Photos {
     thumbnailUrl: string
 }
 
+export interface Albums {
+    userId: number
+    id: number
+    title: string
+}
+
 export enum ActionTypes {
     FETCH_PHOTOS_SUCCESS = 'FETCH_PHOTOS_SUCCESS'
 }
@@ -13,11 +19,13 @@ export enum ActionTypes {
 export interface FetchPhotosSuccess {
     type: ActionTypes.FETCH_PHOTOS_SUCCESS
     photos: Array<Photos>
+    albums: Array<Albums>
 }
 
 export type UserAction = FetchPhotosSuccess
 
-export type PhotosType = {
+export type PhotosAndAlbumsType = {
     photos: Array<Photos>
-    a: boolean
+    albums: Array<Albums>
+    isLoaded: boolean
 }
